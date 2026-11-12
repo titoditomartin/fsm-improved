@@ -1,26 +1,22 @@
 
 # FSM of a Microwave
 
-A Finite State Machine (FSM) is a mathematical model used by programmers, mathematicians, engineers, and other professionals to describe systems with a finite number of states.
+A Finite State Machine (FSM) is a mathematical model used to represent systems with a finite number of states. Transitions between states occur based on specific inputs or events.
 
-A finite state machine for a microwave has a limited number of states representing the different actions and operating modes of the device. Transitions between these states are triggered by specific inputs or events.
+This project is a command-line microwave simulator developed in **C**. It uses two binary inputs (door and timer) and three operating states to simulate microwave functionality.
 
-In this project, I developed a command-line microwave simulator using the **C programming language**. The simulation uses two binary inputs (door and timer) and three operating states.
-
-The first state **(00)** represents the microwave door being open. The second state **(01)** represents the microwave door being closed without cooking. The third state **(10)** represents the microwave cooking with the door closed and the timer started.
-
-This project was originally developed as a first-semester university assignment in 2023 and later revisited to improve its functionality, input validation, and state transitions.
+Originally developed as a first-semester university assignment in 2023, the project was revisited in 2026 to improve its functionality and reliability.
 
 ## Features
 
 - Interactive command-line interface (CLI)
-- Three operating states using Finite State Machine logic
+- Three operating states using FSM logic
 - Door and timer controls using binary inputs
-- ASCII-art microwave visualization
+- Text-based microwave visualization
 - Three-second cooking countdown
-- Automatic return to the Door Closed state after cooking
+- Automatic return to Door Closed after cooking
 - Input validation for invalid numbers and nonnumeric characters
-- Graceful program termination using `-1`
+- Program termination using `-1`
 
 ## States
 
@@ -32,77 +28,60 @@ This project was originally developed as a first-semester university assignment 
 
 The simulation uses two binary inputs:
 
-1. **D (0/1)** = Door Open (0) / Door Closed (1)
-2. **T (0/1)** = Timer Stopped (0) / Timer Started (1)
+1. **D (0/1)** — Door Open (0) / Door Closed (1)
+2. **T (0/1)** — Timer Stopped (0) / Timer Started (1)
 
-The application also accepts `-1` at either input prompt to terminate the simulation.
+Enter `-1` at either input prompt to exit the simulation.
 
 ## FSM Diagram
 
-The following diagram illustrates the three operating states and their transitions in the revised microwave simulation.
+The diagram below illustrates the three operating states and their transitions.
 
 ![Microwave FSM Diagram](img/fsm_diagram.png)
 
-The microwave must first enter the Door Closed state before cooking can begin. After the cooking countdown finishes, the application automatically returns to the Door Closed state.
-
-## State Transitions
-
-| Current State | Input / Event | Next State |
-|---|---|---|
-| Door Open (00) | D = 0 | Door Open (00) |
-| Door Open (00) | D = 1 | Door Closed (01) |
-| Door Closed (01) | D = 0 | Door Open (00) |
-| Door Closed (01) | D = 1, T = 0 | Door Closed (01) |
-| Door Closed (01) | D = 1, T = 1 | Cooking (10) |
-| Cooking (10) | Countdown completed | Door Closed (01) |
-
-During the cooking countdown, the application does not accept additional inputs. Once the countdown finishes, it automatically returns to the Door Closed state.
+The door must be closed before cooking can begin. After the countdown finishes, the microwave automatically returns to the Door Closed state.
 
 ## Truth Table
 
-The truth table represents the current state bits (`s0`, `s1`), door input (`D`), timer input (`T`), next-state bits (`S0`, `S1`), and cooking output (`M`).
+The truth table shows how the current state and inputs determine the next state and cooking output.
 
 ![Microwave FSM Truth Table](img/truth_table.png)
 
-The table covers the three valid operating states and their binary input combinations.
-
 ## Karnaugh Maps
 
-Karnaugh maps illustrate the Boolean representation of the FSM's next-state and output functions.
-
-The maps are based on the three valid operating states: Door Open (00), Door Closed (01), and Cooking (10).
+Karnaugh maps illustrate the Boolean logic behind the FSM's state transitions and output.
 
 ![Microwave FSM Karnaugh Maps](img/kmap_fsm.png)
 
-The unused state (11) is represented using don't-care values (`X`) for Boolean simplification. The revised C implementation uses conditional statements to implement the transitions.
+The unused state `11` is represented by don't-care values (`X`) for Boolean simplification. The program uses conditional statements to implement the state transitions.
 
 ## Visualization
 
-The application uses ASCII art to represent the microwave and display its operating state directly in the terminal.
+The microwave's operating states are displayed using text characters in the terminal.
 
-### First State — Door Open (00)
+### Door Open (00)
 
 ![Door Open](img/door_opened.png)
 
-This image shows the starting state, where the microwave door is open and cooking has not started.
+The initial state, where the microwave door is open.
 
-### Second State — Door Closed (01)
+### Door Closed (01)
 
 ![Door Closed](img/door_closed.png)
 
-This image shows the second state, where the microwave door is closed but cooking has not started.
+The door is closed, and the microwave is ready to start cooking.
 
-### Third State — Cooking (10)
+### Cooking (10)
 
 ![Cooking](img/cooking.png)
 
-This image demonstrates the three-second cooking countdown and the automatic return to the Door Closed state after cooking completes.
+The microwave counts down from three seconds and automatically returns to the Door Closed state when cooking finishes.
 
 ### Program Termination
 
 ![Program Termination](img/program_terminated.png)
 
-The simulation can be terminated by entering `-1` at any input prompt.
+Entering `-1` terminates the simulation.
 
 ## How to Run
 
@@ -110,9 +89,9 @@ The simulation can be terminated by entering `-1` at any input prompt.
 
 - GCC compiler
 - Terminal or command prompt
-- A compatible C development environment, such as MSYS2 UCRT64 on Windows
+- Compatible C development environment (e.g., MSYS2 UCRT64 on Windows)
 
-### Step 1 — Clone the Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/titoditomartin/fsm-improved.git
@@ -121,21 +100,14 @@ cd fsm-improved
 
 Alternatively, download the repository as a ZIP file and extract it.
 
-### Step 2 — Compile the Program
-
-Compile the FSM library:
+### Compile
 
 ```bash
 gcc -c mylib/mylib.c -o mylib.o
-```
-
-Compile the main application:
-
-```bash
 gcc main.c mylib.o -o main.exe
 ```
 
-### Step 3 — Run the Program
+### Run
 
 On Windows:
 
@@ -143,69 +115,24 @@ On Windows:
 ./main.exe
 ```
 
-### How to Use
+### Controls
 
-1. Enter `0` or `1` to control the microwave door.
-2. Enter `0` or `1` to stop or start the timer.
-3. Close the door before starting the cooking process.
-4. When cooking begins, the microwave counts down from 3 to 1.
-5. After cooking completes, the microwave automatically returns to the Door Closed state.
-6. Enter `-1` at any input prompt to exit the simulation.
+- **Door input:** `0` = Open, `1` = Closed
+- **Timer input:** `0` = Stop, `1` = Start
+- **Exit:** `-1`
 
-Invalid inputs are rejected, and the application prompts the user to enter a valid value.
-
-## Project Structure
-
-```text
-fsm-improved/
-├── img/
-│   ├── cooking.png
-│   ├── door_closed.png
-│   ├── door_opened.png
-│   ├── fsm_diagram.png
-│   ├── kmap_fsm.png
-│   ├── program_terminated.png
-│   └── truth_table.png
-├── mylib/
-│   ├── mylib.c
-│   └── mylib.h
-├── .gitignore
-├── Makefile
-├── README.md
-└── main.c
-```
-
-### Main Components
-
-- **main.c** — Handles user input, ASCII-art visualization, cooking countdown, and application flow.
-- **mylib/mylib.c** — Contains the finite state machine transition logic.
-- **mylib/mylib.h** — Declares the FSM function.
-- **Makefile** — Provides build configuration for the project.
-- **img/** — Contains the FSM documentation and application screenshots.
+To start cooking, close the door first, then enter `1` for both the door and timer inputs.
 
 ## Improvements
 
-This project was originally developed in 2023 as a first-semester university assignment.
+The original project was developed in 2023 as a first-semester university assignment. In 2026, I revisited the application to:
 
-In 2026, I revisited the project to improve its reliability and usability while preserving the original command-line microwave simulation concept.
+- Correct state-transition behavior
+- Improve input validation and error handling
+- Automatically return to Door Closed after cooking
+- Add a proper exit option
+- Improve code readability 
 
-The improvements include:
-
-- Corrected state-transition behavior
-- Improved validation for numeric and nonnumeric inputs
-- Automatic return to the Door Closed state after cooking
-- Graceful program termination
-- Improved code readability
-- Updated technical documentation
-
-The original academic implementation, including its initial Boolean equations and supporting documentation, is preserved in a separate repository.
+The original implementation and its academic documentation are preserved separately.
 
 **Original Repository:** [fsm](https://github.com/titoditomartin/fsm)
-
-## Technologies and Concepts
-
-- **Programming Language:** C
-- **Compiler:** GCC
-- **Interface:** Command-Line Interface (CLI)
-- **Build Tool:** Make
-- **Concepts:** Finite State Machines, State Transitions, Boolean Logic, Input Validation, and ASCII Art

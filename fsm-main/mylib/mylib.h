@@ -1,1 +1,0 @@
-void states(int s0, int s1, int D, int T, int* S0, int* S1, int* M);
